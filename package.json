@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "jest --watchAll",
-    "test:husky": "jest --forceExit"
+    "test:husky": "jest --forceExit --passWithNoTests"
   },
   "repository": {
     "type": "git",
