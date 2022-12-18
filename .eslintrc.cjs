@@ -31,7 +31,7 @@ module.exports = {
     "object-curly-spacing": [2, "never"],
     "operator-linebreak": [2, "after"],
     "padded-blocks": [2, "never"],
-    quotes: [2, "double", "avoid-escape"],
+    quotes: [2, "single", "avoid-escape"],
     "semi-spacing": [2, { before: false, after: true }],
     semi: [2, "always"],
     "keyword-spacing": [2, { before: true, after: true }],
