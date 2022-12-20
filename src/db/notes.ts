@@ -9,7 +9,7 @@ const defaultOptions: Options = {
   dbName: process.env.MONGO_DB_NAME || 'test',
 };
 
-export default class MongoAPI {
+export default class NotesApi {
   static async init(url=process.env.MONGOCLOUD_URL, options=defaultOptions) {
     await connect(url, options);
   }

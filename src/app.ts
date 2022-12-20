@@ -4,14 +4,14 @@ import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors = require('cors');
 
-import MongoDb from './db';
+import NotesApi from './db/notes';
 import ErrorHandler from './error';
 
 const app: Application = express();
 dotenv.config();
 
 const dbInit = async () => {
-  await MongoDb.init();
+  await NotesApi.init();
 }
 
 dbInit().catch((err) => console.log(err));
