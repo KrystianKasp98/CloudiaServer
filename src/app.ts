@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import cors = require('cors');
 
 import NotesApi from './db/notes';
+import routerNotes from './routes/notes';
 import ErrorHandler from './error';
 
 const app: Application = express();
@@ -12,6 +13,7 @@ dotenv.config();
 
 const dbInit = async () => {
   await NotesApi.init();
+  // NotesApi.addNote('test');
 }
 
 dbInit().catch((err) => console.log(err));
@@ -29,7 +31,7 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Hi from CloudiaServer'
   });
 });
-
+app.use('/notes', routerNotes);
 app.all('*', ErrorHandler.badRequest);
 
 export default app;
