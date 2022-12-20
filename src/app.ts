@@ -30,6 +30,6 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-app.all("*", ErrorHandler.badRequest);
+app.all('*', ErrorHandler.badRequest);
 
 export default app;

@@ -1,6 +1,6 @@
-import {Request, Response} from "express";
-import NotesApi from "../db/notes";
-import ErrorHandler from "../error";
+import {Request, Response} from 'express';
+import NotesApi from '../db/notes';
+import ErrorHandler from '../error';
 
 export default class ControllerNotes extends ErrorHandler {
   constructor() {
@@ -31,6 +31,23 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await NotesApi.getNote(id);
+        res.status(200).json(result);
+      } catch (err) {
+        res.status(404).json({result: false});
+      }
+    };
+
+    await super.provider(req, res, callback);
+  }
+
+  static async deleteById(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const callback = async () => {
+      try {
+        const {id} = req.params;
+        const result = await NotesApi.deleteNote(id);
         res.status(200).json(result);
       } catch (err) {
         res.status(404).json({result: false});
