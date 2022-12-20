@@ -21,5 +21,4 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-// trigger change
 export default app;
