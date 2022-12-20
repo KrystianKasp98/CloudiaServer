@@ -5,13 +5,13 @@ import { Options } from './types';
 
 dotenv.config();
 
-const options: Options = {
+const defaultOptions: Options = {
   dbName: process.env.MONGO_DB_NAME || 'test',
 };
 
 export default class MongoAPI {
-  static async init() {
-    await connect(process.env.MONGOCLOUD_URL, options);
+  static async init(url=process.env.MONGOCLOUD_URL, options=defaultOptions) {
+    await connect(url, options);
   }
 
   static async addNote(note: string) {
@@ -28,5 +28,9 @@ export default class MongoAPI {
 
   static async getNotes() {
     return await Note.find({});
+  }
+
+  static async deleteNote(id: string) {
+    return await Note.deleteOne({ _id: id });
   }
 }
