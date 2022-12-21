@@ -13,7 +13,8 @@ dotenv.config();
 
 const dbInit = async () => {
   await NotesApi.init();
-  // NotesApi.addNote('test');
+  // NotesApi.addNote('K+K=<3', '2022-11-26');
+  // NotesApi.addNote('note without date');
 }
 
 dbInit().catch((err) => console.log(err));

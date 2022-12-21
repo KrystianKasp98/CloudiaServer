@@ -14,10 +14,11 @@ export default class NotesApi {
     await connect(url, options);
   }
 
-  static async addNote(note: string) {
+  static async addNote(note: string, date?: string) {
     const noteDocument = new Note({
       note,
-      date: new Date(),
+      date: date ? new Date(date) : new Date(),
+      timestamp: new Date()
     });
     return await noteDocument.save(); // probably return required
   }
