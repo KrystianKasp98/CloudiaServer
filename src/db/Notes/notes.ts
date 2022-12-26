@@ -34,7 +34,9 @@ export default class NotesApi {
       isEdited: true,
       edits: [...prevNote.edits, {note: prevNote.note, date: prevNote.date, timestamp: prevNote.timestamp}]
     };
-    return Note.findByIdAndUpdate(id, updatedNote);
+    await Note.findByIdAndUpdate(id, updatedNote);
+
+    return await Note.findById(id);
   }
 
   static async getNote(id: string) {

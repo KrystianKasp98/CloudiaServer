@@ -22,6 +22,12 @@ const validateBody = (expectedType: object, body: object) => {
     }
 };
 
+const compareResultAndExpect = (body: object, expectedResult: object) => {
+  for (const [key, value] of Object.entries(expectedResult)) {
+    expect(body[key]).toEqual(value);
+  }
+};
+
 describe('/ route', () => {
   it('/ [SUCCESS]', async () => {
     const res = await request(app).get('/');
@@ -55,6 +61,29 @@ describe('/notes route [SUCCESS]', () => {
     validateBody(expectedNoteType, res.body);
   });
 
+  it('[POST], [PUT], [DELETE] /', async () => {
+    const inputPostBody = {note: 'I <3 CloudiaServer', date: '2022-12-26T22:19:56.945Z'};
+    const resPost = await request(app).post('/notes').send(inputPostBody);
+    
+    expect(resPost.statusCode).toEqual(expectedStatusCode.ok);
+    validateBody(expectedNoteType, resPost.body);
+    compareResultAndExpect(resPost.body, inputPostBody);
+
+    const noteId = resPost.body._id;
+    const inputPutBody = {note: 'I <3 CloudiaServer much more as before'};
+    const resPut = await request(app).put(`/notes/${noteId}`).send(inputPutBody);
+
+    expect(resPut.statusCode).toEqual(expectedStatusCode.ok);
+    validateBody(expectedNoteType, resPut.body);
+    compareResultAndExpect(resPut.body, inputPutBody);
+
+    const expectedDeleteBody = {acknowledged: true, deletedCount: 1};
+    const resDelete = await request(app).delete(`/notes/${noteId}`);
+
+    expect(resDelete.statusCode).toEqual(expectedStatusCode.ok);
+    compareResultAndExpect(resDelete.body, expectedDeleteBody);
+
+  });
 });
 
 describe('/notes route [FAIL]', () => {
