@@ -17,7 +17,7 @@ export default class NotesApi {
   static async addNote({note, date}: NoteInterface) {
     const noteDocument = new Note({
       note,
-      date: date ? new Date(date) : new Date(),
+      date: typeof date === 'string' ? new Date(date) : new Date(),
       timestamp: new Date(),
       isEdited: false,
       edits: [],
