@@ -8,12 +8,12 @@ router.get('/', ControllerNotes.getAll);
 router.get('/:id', ControllerNotes.getById);
 router.post(
   '/',
-  body('note').isLength({ min: 1 }),
+  body('note').isLength({min: 1}),
   ControllerNotes.add
 );
 router.put(
   '/:id',
-  body('note').isLength({ min: 1 }),
+  body('note').isLength({min: 1}),
   ControllerNotes.edit
 );
 router.delete('/:id', ControllerNotes.deleteById);
