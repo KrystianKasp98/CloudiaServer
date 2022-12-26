@@ -1,15 +1,17 @@
 import {Schema, model} from 'mongoose';
-import {NoteInterface} from '../types';
+import {FullNoteInterFace} from '../types';
 
-const noteSchema = new Schema<NoteInterface>({
+const noteSchema = new Schema<FullNoteInterFace>({
   note: {type: String, required: true},
   date: {type: Date, required: true},
-  timestamp: {type: Date, required: true},
-  // ideas
-  // isEdited
-  // updateTimestamp
+  timestamp: { type: Date, required: true },
+  isEdited: { type: Boolean, required: true },
+  edits: {
+    type: [{note: String, date: Date, timestamp: Date}],
+    required: true
+  }
 });
 
-const Note = model<NoteInterface>('Note', noteSchema);
+const Note = model<FullNoteInterFace>('Note', noteSchema);
 
 export default Note;

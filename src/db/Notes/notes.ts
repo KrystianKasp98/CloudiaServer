@@ -18,14 +18,24 @@ export default class NotesApi {
     const noteDocument = new Note({
       note,
       date: date ? new Date(date) : new Date(),
-      timestamp: new Date()
+      timestamp: new Date(),
+      isEdited: false,
+      edits: [],
     });
     return await noteDocument.save(); // probably return required
   }
 
-  static async editNote({note, date, id}: NoteEditInterface) {
+  static async editNote({ note, date, id }: NoteEditInterface) {
+    const prevNote = await Note.findById(id);
+    console.log({prevNote});
     const timestamp = new Date();
-    return Note.findByIdAndUpdate(id, date ? {note, date, timestamp} : {note, timestamp});
+    const updatedNote = {
+      note,
+      timestamp,
+      isEdited: true,
+      edits: [...prevNote.edits, {note: prevNote.note, date: prevNote.date, timestamp: prevNote.timestamp}]
+    };
+    return Note.findByIdAndUpdate(id, updatedNote);
   }
 
   static async getNote(id: string) {
