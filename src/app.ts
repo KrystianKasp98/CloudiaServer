@@ -15,7 +15,7 @@ const dbInit = async () => {
   await NotesApi.init();
   // NotesApi.addNote({note: 'K+K=<3', date: '2022-11-26'});
   // NotesApi.addNote({note: 'note without date'});
-}
+};
 
 dbInit().catch((err) => console.log(err));
 

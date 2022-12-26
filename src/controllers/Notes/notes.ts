@@ -63,11 +63,11 @@ export default class ControllerNotes extends ErrorHandler {
   ): Promise<void> {
     const callback = async () => {
       try {
-        const { note, date } = req.body;
-        const result = await NotesApi.addNote({ note, date });
+        const {note, date} = req.body;
+        const result = await NotesApi.addNote({note, date});
         res.status(200).json(result);
       } catch (err) {
-        res.status(404).json({ result: null, err })
+        res.status(404).json({result: null, err});
       }
     };
 
@@ -80,12 +80,12 @@ export default class ControllerNotes extends ErrorHandler {
   ): Promise<void> {
     const callback = async () => {
       try {
-        const { id } = req.params;
-        const { note, date } = req.body;
-        const result = await NotesApi.editNote({ note, date, id }); // fix result because now it returns old note before updating
+        const {id} = req.params;
+        const {note, date} = req.body;
+        const result = await NotesApi.editNote({note, date, id}); // fix result because now it returns old note before updating
         res.status(200).json(result);
       } catch (err) {
-        res.status(404).json({ result: null, err })
+        res.status(404).json({result: null, err});
       }
     };
 

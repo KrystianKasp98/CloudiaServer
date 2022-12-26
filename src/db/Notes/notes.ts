@@ -1,7 +1,7 @@
 import {connect} from 'mongoose';
 import Note from '../../models/Notes/notes';
 import * as dotenv from 'dotenv';
-import { Options, NoteInterface, NoteEditInterface } from '../types';
+import {Options, NoteInterface, NoteEditInterface} from '../types';
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const defaultOptions: Options = {
 };
 
 export default class NotesApi {
-  static async init(url=process.env.MONGOCLOUD_URL, options=defaultOptions) {
+  static async init(url = process.env.MONGOCLOUD_URL, options = defaultOptions) {
     await connect(url, options);
   }
 
@@ -23,9 +23,9 @@ export default class NotesApi {
     return await noteDocument.save(); // probably return required
   }
 
-  static async editNote({ note, date, id }: NoteEditInterface) {
+  static async editNote({note, date, id}: NoteEditInterface) {
     const timestamp = new Date();
-    return Note.findByIdAndUpdate(id, date ? { note, date, timestamp } : { note, timestamp });
+    return Note.findByIdAndUpdate(id, date ? {note, date, timestamp} : {note, timestamp});
   }
 
   static async getNote(id: string) {
@@ -37,6 +37,6 @@ export default class NotesApi {
   }
 
   static async deleteNote(id: string) {
-    return await Note.deleteOne({ _id: id });
+    return await Note.deleteOne({_id: id});
   }
 }
