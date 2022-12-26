@@ -1,7 +1,7 @@
 import {connect} from 'mongoose';
-import Note from '../models/notes';
+import Note from '../../models/Notes/notes';
 import * as dotenv from 'dotenv';
-import { Options, NoteInterface, NoteEditInterface } from './types';
+import { Options, NoteInterface, NoteEditInterface } from '../types';
 
 dotenv.config();
 

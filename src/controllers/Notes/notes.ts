@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import NotesApi from '../db/notes';
-import ErrorHandler from '../error';
+import NotesApi from '../../db/Notes/notes';
+import ErrorHandler from '../../error';
 
 export default class ControllerNotes extends ErrorHandler {
   constructor() {

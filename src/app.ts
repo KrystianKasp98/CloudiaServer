@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors = require('cors');
 
-import NotesApi from './db/notes';
+import NotesApi from './db/Notes/notes';
 import routerNotes from './routes/notes';
 import ErrorHandler from './error';
 

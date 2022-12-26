@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import ControllerNotes from '../controllers/notes';
+import ControllerNotes from '../controllers/Notes/notes';
 
 const router = Router();
 

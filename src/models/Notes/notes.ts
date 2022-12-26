@@ -1,5 +1,5 @@
 import {Schema, model} from 'mongoose';
-import { NoteInterface } from './types';
+import { NoteInterface } from '../types';
 
 const noteSchema = new Schema<NoteInterface>({
   note: {type: String, required: true},
