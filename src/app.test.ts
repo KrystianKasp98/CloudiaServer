@@ -13,6 +13,7 @@ const expectedNoteType = {
 
 const expectedStatusCode = {
   ok: 200,
+  badRequest: 400,
   notFound: 404,
 }
 
@@ -87,11 +88,36 @@ describe('/notes route [SUCCESS]', () => {
 });
 
 describe('/notes route [FAIL]', () => {
-  it('[GET] /:id', async () => {
+  it('[GET] /:id, bad id', async () => {
     const res = await request(app).get('/notes/wrongid');
     const expectedResult = null;
 
     expect(res.statusCode).toEqual(expectedStatusCode.notFound);
     expect(res.body.result).toEqual(expectedResult);
   });
+
+  it('[POST] /, empty note', async () => {
+    const res = await request(app).post('/notes').send({note: ''});
+    
+    expect(res.statusCode).toEqual(expectedStatusCode.badRequest);
+  });
+
+  it('[PUT] /:id, empty note', async () => {
+    const res = await request(app).put('/notes/63a24fa71e33c4ef5943a37b').send({note: ''});
+    
+    expect(res.statusCode).toEqual(expectedStatusCode.badRequest);
+  });
+
+  it('[PUT] /:id, bad id', async () => {
+    const res = await request(app).put('/notes/wrongid').send({note: 'wrong id'});
+    
+    expect(res.statusCode).toEqual(expectedStatusCode.notFound);
+  });
+
+  it('[DELETE] /:id, bad id', async () => {
+    const res = await request(app).delete('/notes/wrongid');
+    
+    expect(res.statusCode).toEqual(expectedStatusCode.notFound);
+  });
+
 });
