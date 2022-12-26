@@ -15,8 +15,8 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const result = await NotesApi.getNotes();
         res.status(200).json(result);
-      } catch (err) {
-        res.status(404);
+      } catch (err: unknown) {
+        res.status(404).json(err);
       }
     };
 
@@ -32,8 +32,8 @@ export default class ControllerNotes extends ErrorHandler {
         const {id} = req.params;
         const result = await NotesApi.getNote(id);
         res.status(200).json(result);
-      } catch (err) {
-        res.status(404).json({result: null, err});
+      } catch (err: unknown) {
+        res.status(404).json(err);
       }
     };
 
@@ -49,8 +49,8 @@ export default class ControllerNotes extends ErrorHandler {
         const {id} = req.params;
         const result = await NotesApi.deleteNote(id);
         res.status(200).json(result);
-      } catch (err) {
-        res.status(404).json({result: null, err});
+      } catch (err: unknown) {
+        res.status(404).json(err);
       }
     };
 
@@ -63,11 +63,11 @@ export default class ControllerNotes extends ErrorHandler {
   ): Promise<void> {
     const callback = async () => {
       try {
-        const {note, date} = req.body;
+        const {note, date}: {note: string, date?: string} = req.body;
         const result = await NotesApi.addNote({note, date});
         res.status(200).json(result);
-      } catch (err) {
-        res.status(404).json({result: null, err});
+      } catch (err: unknown) {
+        res.status(404).json(err);
       }
     };
 
@@ -81,11 +81,11 @@ export default class ControllerNotes extends ErrorHandler {
     const callback = async () => {
       try {
         const {id} = req.params;
-        const {note, date} = req.body;
+        const {note, date}: {note: string, date?: string} = req.body;
         const result = await NotesApi.editNote({note, date, id}); // fix result because now it returns old note before updating
         res.status(200).json(result);
-      } catch (err) {
-        res.status(404).json({result: null, err});
+      } catch (err: unknown) {
+        res.status(404).json(err);
       }
     };
 

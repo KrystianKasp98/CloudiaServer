@@ -30,6 +30,7 @@ export default class NotesApi {
     const timestamp = new Date();
     const updatedNote = {
       note,
+      date: typeof date === 'string' ? new Date(date) : new Date(),
       timestamp,
       isEdited: true,
       edits: [...prevNote.edits, {note: prevNote.note, date: prevNote.date, timestamp: prevNote.timestamp}]
