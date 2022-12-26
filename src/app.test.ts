@@ -11,6 +11,11 @@ const expectedNoteType = {
   isEdited: 'boolean',
 }
 
+const expectedStatusCode = {
+  ok: 200,
+  notFound: 404,
+}
+
 const validateBody = (expectedType: object, body: object) => {
     for (const [key, value] of Object.entries(expectedType)) {
       expect(typeof body[key]).toEqual(value);
@@ -22,7 +27,7 @@ describe('/ route', () => {
     const res = await request(app).get('/');
     const expectedBody = {message: 'Hi from CloudiaServer'};
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(expectedStatusCode.ok);
     expect(res.body).toEqual(expectedBody);
   });
 
@@ -30,7 +35,7 @@ describe('/ route', () => {
     const res = await request(app).get('/fail');
     const expectedText = 'Bad request';
     
-    expect(res.statusCode).toEqual(404);
+    expect(res.statusCode).toEqual(expectedStatusCode.notFound);
     expect(res.text).toEqual(expectedText);
   });
 });
@@ -39,15 +44,25 @@ describe('/notes route [SUCCESS]', () => {
   it('[GET] /', async () => {
     const res = await request(app).get('/notes');
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(expectedStatusCode.ok);
     expect(Array.isArray(res.body)).toEqual(true);
   });
 
   it('[GET] /:id', async () => {
     const res = await request(app).get('/notes/63a24fa71e33c4ef5943a37b');
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(expectedStatusCode.ok);
     validateBody(expectedNoteType, res.body);
   });
 
+});
+
+describe('/notes route [FAIL]', () => {
+  it('[GET] /:id', async () => {
+    const res = await request(app).get('/notes/wrongid');
+    const expectedResult = null;
+
+    expect(res.statusCode).toEqual(expectedStatusCode.notFound);
+    expect(res.body.result).toEqual(expectedResult);
+  });
 });
