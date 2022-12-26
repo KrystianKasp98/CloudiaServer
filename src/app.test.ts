@@ -36,17 +36,18 @@ describe('/ route', () => {
 });
 
 describe('/notes route [SUCCESS]', () => {
-  it('find all', async () => {
+  it('[GET] /', async () => {
     const res = await request(app).get('/notes');
 
     expect(res.statusCode).toEqual(200);
     expect(Array.isArray(res.body)).toEqual(true);
   });
 
-  it('find by id', async () => {
+  it('[GET] /:id', async () => {
     const res = await request(app).get('/notes/63a24fa71e33c4ef5943a37b');
 
     expect(res.statusCode).toEqual(200);
     validateBody(expectedNoteType, res.body);
   });
+
 });
