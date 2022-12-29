@@ -1,7 +1,7 @@
 import {connect} from 'mongoose';
 import Note from '../../models/Notes/notes';
 import * as dotenv from 'dotenv';
-import {Options, NoteInterface, NoteEditInterface} from '../types';
+import {Options, NoteAddInterface, NoteEditInterface} from '../types';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ export default class NotesApi {
     await connect(url, options);
   }
 
-  static async addNote({note, date}: NoteInterface) {
+  static async addNote({note, date}: NoteAddInterface) {
     const noteDocument = new Note({
       note,
       date: typeof date === 'string' ? new Date(date) : new Date(),

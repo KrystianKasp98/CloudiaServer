@@ -11,3 +11,11 @@ export interface NoteInterface extends SingleNote{
 export interface FullNoteInterFace extends NoteInterface{
   edits: Array<SingleNote>
 }
+
+export interface UserInterface {
+  name: string;
+  lastname: string;
+  email: string;
+  login: string;
+  password: string;
+}
