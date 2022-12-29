@@ -14,5 +14,7 @@ export default class UserApi {
     await connect(url, options);
   }
 
-  static async addUser()
+  static async addUser() {
+    // check if passed login and email exist
+  }
 }
