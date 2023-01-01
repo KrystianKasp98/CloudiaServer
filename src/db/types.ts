@@ -12,5 +12,9 @@ export interface NoteEditInterface extends NoteAddInterface {
 }
 
 export interface UserAddInterface {
-  
+  name: string,
+  lastname: string,
+  email: string,
+  login: string,
+  password: string,
 }

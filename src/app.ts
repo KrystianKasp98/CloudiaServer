@@ -5,7 +5,9 @@ import helmet from 'helmet';
 import cors = require('cors');
 
 import NotesApi from './db/Notes/notes';
+import UsersApi from './db/Users/users';
 import routerNotes from './routes/notes';
+import routerUsers from './routes/users';
 import ErrorHandler from './error';
 
 const app: Application = express();
@@ -13,6 +15,7 @@ dotenv.config();
 
 const dbInit = async () => {
   await NotesApi.init();
+  await UsersApi.init();
 };
 
 dbInit().catch((err) => console.log(err));
@@ -31,6 +34,7 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 app.use('/notes', routerNotes);
+app.use('/users', routerUsers);
 app.all('*', ErrorHandler.badRequest);
 
 export default app;

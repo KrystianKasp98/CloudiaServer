@@ -12,12 +12,8 @@ export default class ControllerNotes extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      try {
-        const result = await NotesApi.getNotes();
-        res.status(200).json(result);
-      } catch (err: unknown) {
-        res.status(404).json(err);
-      }
+      const result = await NotesApi.getNotes();
+      res.status(200).json(result);
     };
 
     await super.provider(req, res, callback);
@@ -28,13 +24,9 @@ export default class ControllerNotes extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      try {
-        const {id} = req.params;
-        const result = await NotesApi.getNote(id);
-        res.status(200).json(result);
-      } catch (err: unknown) {
-        res.status(404).json(err);
-      }
+      const {id} = req.params;
+      const result = await NotesApi.getNote(id);
+      res.status(200).json(result);
     };
 
     await super.provider(req, res, callback);
@@ -45,13 +37,9 @@ export default class ControllerNotes extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      try {
-        const {id} = req.params;
-        const result = await NotesApi.deleteNote(id);
-        res.status(200).json(result);
-      } catch (err: unknown) {
-        res.status(404).json(err);
-      }
+      const {id} = req.params;
+      const result = await NotesApi.deleteNote(id);
+      res.status(200).json(result);
     };
 
     await super.provider(req, res, callback);
@@ -62,13 +50,9 @@ export default class ControllerNotes extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      try {
-        const {note, date}: {note: string, date?: string} = req.body;
-        const result = await NotesApi.addNote({note, date});
-        res.status(200).json(result);
-      } catch (err: unknown) {
-        res.status(404).json(err);
-      }
+      const {note, date}: {note: string, date?: string} = req.body;
+      const result = await NotesApi.addNote({note, date});
+      res.status(200).json(result);
     };
 
     await super.provider(req, res, callback);
@@ -79,14 +63,10 @@ export default class ControllerNotes extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      try {
-        const {id} = req.params;
-        const {note, date}: {note: string, date?: string} = req.body;
-        const result = await NotesApi.editNote({note, date, id}); // fix result because now it returns old note before updating
-        res.status(200).json(result);
-      } catch (err: unknown) {
-        res.status(404).json(err);
-      }
+      const {id} = req.params;
+      const {note, date}: {note: string, date?: string} = req.body;
+      const result = await NotesApi.editNote({note, date, id}); // fix result because now it returns old note before updating
+      res.status(200).json(result);
     };
 
     await super.provider(req, res, callback);
