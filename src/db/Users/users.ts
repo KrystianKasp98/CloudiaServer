@@ -32,4 +32,8 @@ export default class UsersApi {
   static async loginUser({login, password}: UserLoginInterface) {
     return await User.findOne({login, password});
   }
+
+  static async deleteUser(id: string) {
+    return await User.deleteOne({_id: id});
+  }
 }

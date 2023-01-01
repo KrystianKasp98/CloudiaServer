@@ -44,4 +44,21 @@ export default class ControllerUsers extends ErrorHandler {
 
     await super.provider(req, res, callback);
   }
+
+  static async deleteById(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
+    const callback = async () => {
+      try {
+        const {id} = req.params;
+        const result = await UsersApi.deleteUser(id);
+        res.status(200).json(result);
+      } catch (err: unknown) {
+        res.status(404).json(err);
+      }
+    };
+
+    await super.provider(req, res, callback);
+  }
 }

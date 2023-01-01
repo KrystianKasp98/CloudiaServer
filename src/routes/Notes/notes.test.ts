@@ -14,8 +14,6 @@ const expectedNoteType = {
   isEdited: 'boolean',
 };
 
-
-
 describe('/notes route [SUCCESS]', () => {
   it('[GET] /', async () => {
     const res: ExpressResult = await request(app).get('/notes');
