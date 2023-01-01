@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {body} from 'express-validator';
 import ControllerUsers from '../../controllers/Users/users';
-import {forbiddenPasswords} from '../../consts';
+import {forbiddenPasswords} from '../../utils/consts';
 
 
 const router = Router();
