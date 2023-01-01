@@ -3,6 +3,7 @@ import * as request from 'supertest';
 import {expect, describe, it} from '@jest/globals';
 import {ExpressResult} from '../../types';
 import {statusCode} from '../../utils/consts';
+import {validateBody, compareResultAndExpect} from '../../utils/helpers';
 
 const expectedNoteType = {
   _id: 'string',
@@ -13,17 +14,7 @@ const expectedNoteType = {
   isEdited: 'boolean',
 };
 
-const validateBody = (expectedType: object, body: object) => {
-  for (const [key, value] of Object.entries(expectedType)) {
-    expect(typeof body[key]).toEqual(value);
-  }
-};
 
-const compareResultAndExpect = (body: object, expectedResult: object) => {
-  for (const [key, value] of Object.entries(expectedResult)) {
-    expect(body[key]).toEqual(value);
-  }
-};
 
 describe('/notes route [SUCCESS]', () => {
   it('[GET] /', async () => {
