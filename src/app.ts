@@ -6,8 +6,8 @@ import cors = require('cors');
 
 import NotesApi from './db/Notes/notes';
 import UsersApi from './db/Users/users';
-import routerNotes from './routes/notes';
-import routerUsers from './routes/users';
+import routerNotes from './routes/Notes/notes';
+import routerUsers from './routes/Users/users';
 import ErrorHandler from './error';
 
 const app: Application = express();

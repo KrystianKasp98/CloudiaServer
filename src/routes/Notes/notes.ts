@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {body} from 'express-validator';
-import ControllerNotes from '../controllers/Notes/notes';
+import ControllerNotes from '../../controllers/Notes/notes';
 
 const router = Router();
 

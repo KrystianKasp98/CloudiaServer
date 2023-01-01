@@ -13,10 +13,14 @@ export default class ControllerUsers extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      const {name, lastname, email, login, password}: UserAddInterface = req.body;
-      const result = await UsersApi.addUser({name, lastname, email, login, password});
-      const status = typeof result === 'string' ? 409 : 200;
-      res.status(status).json(result);
+      try {
+        const {name, lastname, email, login, password}: UserAddInterface = req.body;
+        const result = await UsersApi.addUser({name, lastname, email, login, password});
+        const status = typeof result === 'string' ? 409 : 200;
+        res.status(status).json(result);
+      } catch (err) {
+        res.status(404).json(err);
+      }
     };
 
     await super.provider(req, res, callback);
@@ -27,11 +31,15 @@ export default class ControllerUsers extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      const {login, password}: UserLoginInterface = req.body;
-      const user = await UsersApi.loginUser({login, password});
-      const status = user === null ? 403 : 200;
-      const result = user === null ? false : true;
-      res.status(status).json(result);
+      try {
+        const {login, password}: UserLoginInterface = req.body;
+        const user = await UsersApi.loginUser({login, password});
+        const status = user === null ? 403 : 200;
+        const result = user === null ? false : true;
+        res.status(status).json(result);
+      } catch (err: unknown) {
+        res.status(404).json(err);
+      }
     };
 
     await super.provider(req, res, callback);
