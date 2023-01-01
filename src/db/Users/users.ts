@@ -1,7 +1,7 @@
 import {connect} from 'mongoose';
 import User from '../../models/Users/users';
 import * as dotenv from 'dotenv';
-import {Options, UserAddInterface} from '../types';
+import {Options, UserAddInterface, UserLoginInterface} from '../types';
 
 dotenv.config();
 
@@ -27,5 +27,9 @@ export default class UsersApi {
 
     const userDocument = new User({name, lastname, email, login, password});
     return await userDocument.save();
+  }
+
+  static async loginUser({login, password}: UserLoginInterface) {
+    return await User.findOne({login, password});
   }
 }

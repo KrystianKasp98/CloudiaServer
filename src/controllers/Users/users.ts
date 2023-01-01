@@ -20,4 +20,19 @@ export default class ControllerUsers extends ErrorHandler {
 
     await super.provider(req, res, callback);
   }
+
+  static async login(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const callback = async () => {
+      const {login, password} = req.body;
+      const user = await UsersApi.loginUser({login, password});
+      const status = user === null ? 403 : 200;
+      const result = user === null ? false : true;
+      res.status(status).json(result);
+    }
+
+    await super.provider(req, res, callback);
+  }
 }

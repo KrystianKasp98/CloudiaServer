@@ -11,10 +11,13 @@ export interface NoteEditInterface extends NoteAddInterface {
   id: string
 }
 
-export interface UserAddInterface {
+export interface UserLoginInterface {
+  login: string,
+  password: string,
+}
+
+export interface UserAddInterface extends UserLoginInterface {
   name: string,
   lastname: string,
   email: string,
-  login: string,
-  password: string,
 }
