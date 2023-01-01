@@ -34,4 +34,6 @@ router.post(
   ControllerUsers.login
 );
 
+router.delete('/:id', ControllerUsers.deleteById);
+
 export default router;
