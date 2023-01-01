@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import NotesApi from '../../db/Notes/notes';
 import ErrorHandler from '../../error';
+import {NoteAddInterface} from '../../db/types';
 
 export default class ControllerNotes extends ErrorHandler {
   constructor() {
@@ -50,7 +51,7 @@ export default class ControllerNotes extends ErrorHandler {
     res: Response
   ): Promise<void> {
     const callback = async () => {
-      const {note, date}: {note: string, date?: string} = req.body;
+      const {note, date}: NoteAddInterface = req.body;
       const result = await NotesApi.addNote({note, date});
       res.status(200).json(result);
     };
@@ -64,7 +65,7 @@ export default class ControllerNotes extends ErrorHandler {
   ): Promise<void> {
     const callback = async () => {
       const {id} = req.params;
-      const {note, date}: {note: string, date?: string} = req.body;
+      const {note, date}: NoteAddInterface = req.body;
       const result = await NotesApi.editNote({note, date, id}); // fix result because now it returns old note before updating
       res.status(200).json(result);
     };

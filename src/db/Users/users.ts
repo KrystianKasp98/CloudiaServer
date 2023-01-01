@@ -19,7 +19,7 @@ export default class UsersApi {
     if (existingUserLogin.length) {
       return 'passed login is used';
     }
-    
+
     const existingUserEmail = await User.find({email});
     if (existingUserEmail.length) {
       return 'passed email is used';
