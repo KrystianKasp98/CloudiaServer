@@ -8,5 +8,15 @@ export const statusCode = {
   ok: 200,
   created: 201,
   badRequest: 400,
+  forbidden: 403,
   notFound: 404,
+  conflict: 409,
 };
+
+export const responseText = {
+  badRequest: 'Bad request',
+  users: {
+    usedLogin: 'passed login is used',
+    usedEmail: 'passed email is used',
+  }
+}

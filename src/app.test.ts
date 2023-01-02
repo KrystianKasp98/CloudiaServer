@@ -2,7 +2,7 @@ import app from './app';
 import * as request from 'supertest';
 import {expect, describe, it} from '@jest/globals';
 import {ExpressResult} from './types';
-import {statusCode} from './utils/consts';
+import {statusCode, responseText} from './utils/consts';
 
 describe('/ route', () => {
   it('/ [SUCCESS]', async () => {
@@ -15,7 +15,7 @@ describe('/ route', () => {
 
   it('/ [FAIL]', async () => {
     const res: ExpressResult = await request(app).get('/fail');
-    const expectedText = 'Bad request';
+    const expectedText = responseText.badRequest;
 
     expect(res.statusCode).toEqual(statusCode.notFound);
     expect(res.text).toEqual(expectedText);

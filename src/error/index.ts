@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import {validationResult} from 'express-validator';
+import {responseText} from '../utils/consts';
 
 export default class ErrorHandler {
   static async provider(req: Request, res: Response, callback) {
@@ -15,6 +16,6 @@ export default class ErrorHandler {
   }
 
   static badRequest(req: Request, res: Response) {
-    res.status(404).send('Bad request');
+    res.status(404).send(responseText.badRequest);
   }
 }
