@@ -18,5 +18,8 @@ export const responseText = {
   users: {
     usedLogin: 'passed login is used',
     usedEmail: 'passed email is used',
+  },
+  notes: {
+    noteUpdateNotFound: (id: string): string => `there isn't exist note with passed id: ${id}`
   }
 }

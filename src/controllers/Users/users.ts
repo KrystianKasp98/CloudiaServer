@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import UsersApi from '../../db/Users/users';
 import ErrorHandler from '../../error';
 import {UserAddInterface, UserLoginInterface} from '../../db/types';
+import {statusCode} from '../../utils/consts';
 
 export default class ControllerUsers extends ErrorHandler {
   constructor() {
@@ -16,10 +17,10 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {name, lastname, email, login, password}: UserAddInterface = req.body;
         const result = await UsersApi.addUser({name, lastname, email, login, password});
-        const status = typeof result === 'string' ? 409 : 201;
+        const status = typeof result === 'string' ? statusCode.conflict : statusCode.created;
         res.status(status).json(result);
       } catch (err) {
-        res.status(404).json(err);
+        res.status(statusCode.notFound).json(err);
       }
     };
 
@@ -34,11 +35,11 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {login, password}: UserLoginInterface = req.body;
         const user = await UsersApi.loginUser({login, password});
-        const status = user === null ? 403 : 200;
+        const status = user === null ? statusCode.forbidden : statusCode.ok;
         const result = user === null ? false : true;
         res.status(status).json(result);
       } catch (err: unknown) {
-        res.status(404).json(err);
+        res.status(statusCode.notFound).json(err);
       }
     };
 
@@ -53,9 +54,9 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await UsersApi.deleteUser(id);
-        res.status(200).json(result);
+        res.status(statusCode.ok).json(result);
       } catch (err: unknown) {
-        res.status(404).json(err);
+        res.status(statusCode.conflict).json(err);
       }
     };
 

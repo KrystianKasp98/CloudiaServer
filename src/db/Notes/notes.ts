@@ -27,6 +27,9 @@ export default class NotesApi {
 
   static async editNote({note, date, id}: NoteEditInterface) {
     const prevNote = await Note.findById(id);
+    if (!prevNote) {
+      return null;
+    }
     const timestamp = new Date();
     const updatedNote = {
       note,

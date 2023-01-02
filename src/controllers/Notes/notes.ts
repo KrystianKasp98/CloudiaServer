@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import NotesApi from '../../db/Notes/notes';
 import ErrorHandler from '../../error';
 import {NoteAddInterface} from '../../db/types';
+import {responseText, statusCode} from '../../utils/consts';
 
 export default class ControllerNotes extends ErrorHandler {
   constructor() {
@@ -14,7 +15,7 @@ export default class ControllerNotes extends ErrorHandler {
   ): Promise<void> {
     const callback = async () => {
       const result = await NotesApi.getNotes();
-      res.status(200).json(result);
+      res.status(statusCode.ok).json(result);
     };
 
     await super.provider(req, res, callback);
@@ -28,9 +29,9 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await NotesApi.getNote(id);
-        res.status(200).json(result);
+        res.status(statusCode.ok).json(result);
       } catch (err: unknown) {
-        res.status(404).json(err);
+        res.status(statusCode.notFound).json(err);
       }
     };
 
@@ -45,9 +46,9 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await NotesApi.deleteNote(id);
-        res.status(200).json(result);
+        res.status(statusCode.ok).json(result);
       } catch (err) {
-        res.status(404).json(err);
+        res.status(statusCode.notFound).json(err);
       }
     };
 
@@ -62,10 +63,10 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {note, date}: NoteAddInterface = req.body;
         const result = await NotesApi.addNote({ note, date });
-        const status = typeof result === 'string' ? 409 : 201;
+        const status = typeof result === 'string' ? statusCode.conflict : statusCode.created;
         res.status(status).json(result);
       } catch (err: unknown) {
-        res.status(404).json(err);
+        res.status(statusCode.notFound).json(err);
       }
     };
 
@@ -81,9 +82,13 @@ export default class ControllerNotes extends ErrorHandler {
         const {id} = req.params;
         const {note, date}: NoteAddInterface = req.body;
         const result = await NotesApi.editNote({note, date, id});
-        res.status(200).json(result); // check if 200 is correct http response for successful editing
+        if (result === null) {
+          res.status(statusCode.notFound).send(responseText.notes.noteUpdateNotFound(id));
+        } else {
+          res.status(statusCode.ok).json(result);
+        }
       } catch (err: unknown) {
-        res.status(404).json(err);
+        res.status(statusCode.notFound).json(err);
       }
     };
 
