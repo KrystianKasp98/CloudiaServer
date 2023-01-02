@@ -16,7 +16,7 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {name, lastname, email, login, password}: UserAddInterface = req.body;
         const result = await UsersApi.addUser({name, lastname, email, login, password});
-        const status = typeof result === 'string' ? 409 : 200;
+        const status = typeof result === 'string' ? 409 : 201;
         res.status(status).json(result);
       } catch (err) {
         res.status(404).json(err);

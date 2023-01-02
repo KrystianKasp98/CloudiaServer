@@ -61,8 +61,9 @@ export default class ControllerNotes extends ErrorHandler {
     const callback = async () => {
       try {
         const {note, date}: NoteAddInterface = req.body;
-        const result = await NotesApi.addNote({note, date});
-        res.status(200).json(result);
+        const result = await NotesApi.addNote({ note, date });
+        const status = typeof result === 'string' ? 409 : 201;
+        res.status(status).json(result);
       } catch (err: unknown) {
         res.status(404).json(err);
       }
@@ -80,7 +81,7 @@ export default class ControllerNotes extends ErrorHandler {
         const {id} = req.params;
         const {note, date}: NoteAddInterface = req.body;
         const result = await NotesApi.editNote({note, date, id});
-        res.status(200).json(result);
+        res.status(200).json(result); // check if 200 is correct http response for successful editing
       } catch (err: unknown) {
         res.status(404).json(err);
       }

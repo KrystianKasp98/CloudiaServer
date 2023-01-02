@@ -9,9 +9,9 @@ const expectedNoteType = {
   _id: 'string',
   note: 'string',
   date: 'string',
-  timestamp: 'string',
   edits: 'object',
   isEdited: 'boolean',
+  timestamp: 'string',
 };
 
 describe('/notes route [SUCCESS]', () => {
@@ -33,7 +33,7 @@ describe('/notes route [SUCCESS]', () => {
     const inputPostBody = {note: 'I <3 CloudiaServer', date: '2022-12-26T22:19:56.945Z'};
     const resPost: ExpressResult = await request(app).post('/notes').send(inputPostBody);
 
-    expect(resPost.statusCode).toEqual(statusCode.ok);
+    expect(resPost.statusCode).toEqual(statusCode.created);
     validateBody(expectedNoteType, resPost.body);
     compareResultAndExpect(resPost.body, inputPostBody);
 
