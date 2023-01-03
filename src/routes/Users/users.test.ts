@@ -13,7 +13,7 @@ const correctUserCredentials = {
 const wrongUserCredentials = {
   login: 'wr0ngL0g1n',
   password: 'wr0ngP422w0rd',
-}
+};
 
 const correctUserToAdd = {
   name: 'John',
@@ -53,42 +53,42 @@ const wrongEmailUser = {
 
 const tooShortEmailUser = {
   ...correctUserToAdd, email: 'a@w.c'
-}
+};
 
 const tooLongEmailUser = {
   ...correctUserToAdd, email: 'blahblah-blah890-b-ttv-la-blah-hhhh@tolong.com'
-}
+};
 
 const tooShortLoginUser = {
   ...correctUserToAdd, login: 'login'
-}
+};
 
 const tooLongLoginUser = {
   ...correctUserToAdd, login: 'verylongloginforrealitslongerthan25'
-}
+};
 
 const tooShortPasswordUser = {
   ...correctUserToAdd, password: 'spassss'
-}
+};
 
 const tooLongPasswordUser = {
   ...correctUserToAdd, password: 'itisreallylongpasswordforreallongerthan25'
-}
+};
 
 const forbiddenPasswordUser = {
-    ...correctUserToAdd, password: forbiddenPasswords[0]
-}
+  ...correctUserToAdd, password: forbiddenPasswords[0]
+};
 
 const expectedUserType = {
-	_id: 'string',
-	name: 'string',
-	email: 'string',
-	login: 'string',
-	lastname: 'string',
-	password: 'string',
-	createdAt: 'string',
-	updatedAt: 'string',
-}
+  _id: 'string',
+  name: 'string',
+  email: 'string',
+  login: 'string',
+  lastname: 'string',
+  password: 'string',
+  createdAt: 'string',
+  updatedAt: 'string',
+};
 
 describe('/users route [SUCCESS]', () => {
   it('[POST] /login', async () => {
@@ -107,7 +107,7 @@ describe('/users route [SUCCESS]', () => {
 
     const userId = resPost.body._id;
 
-    const expectedDeleteBody = { acknowledged: true, deletedCount: 1 };
+    const expectedDeleteBody = {acknowledged: true, deletedCount: 1};
     const resDelete: ExpressResult = await request(app).delete(`/users/${userId}`);
 
     expect(resDelete.statusCode).toEqual(statusCode.ok);

@@ -8,7 +8,7 @@ export interface NoteAddInterface {
 }
 
 export interface NoteEditInterface extends NoteAddInterface {
-  id: string
+  id: string,
 }
 
 export interface UserLoginInterface {

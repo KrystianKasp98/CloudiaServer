@@ -1,7 +1,6 @@
 interface SingleNote {
   note: string;
   date: Date;
-  timestamp: Date;
 }
 
 export interface NoteInterface extends SingleNote{

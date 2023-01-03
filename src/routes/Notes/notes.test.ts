@@ -11,7 +11,6 @@ const expectedNoteType = {
   date: 'string',
   edits: 'object',
   isEdited: 'boolean',
-  timestamp: 'string',
 };
 
 describe('/notes route [SUCCESS]', () => {

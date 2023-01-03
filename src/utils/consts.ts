@@ -22,4 +22,4 @@ export const responseText = {
   notes: {
     noteUpdateNotFound: (id: string): string => `there isn't exist note with passed id: ${id}`
   }
-}
+};

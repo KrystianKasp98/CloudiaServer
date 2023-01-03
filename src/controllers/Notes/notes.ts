@@ -62,7 +62,7 @@ export default class ControllerNotes extends ErrorHandler {
     const callback = async () => {
       try {
         const {note, date}: NoteAddInterface = req.body;
-        const result = await NotesApi.addNote({ note, date });
+        const result = await NotesApi.addNote({note, date});
         const status = typeof result === 'string' ? statusCode.conflict : statusCode.created;
         res.status(status).json(result);
       } catch (err: unknown) {

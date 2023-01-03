@@ -26,7 +26,7 @@ const limits = {
     min: 8,
     max: 24,
   }
-}
+};
 
 router.post(
   '/new',

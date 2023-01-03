@@ -18,7 +18,6 @@ export default class NotesApi {
     const noteDocument = new Note({
       note,
       date: typeof date === 'string' ? new Date(date) : new Date(),
-      timestamp: new Date(),
       isEdited: false,
       edits: [],
     });
@@ -30,13 +29,11 @@ export default class NotesApi {
     if (!prevNote) {
       return null;
     }
-    const timestamp = new Date();
     const updatedNote = {
       note,
       date: typeof date === 'string' ? new Date(date) : new Date(),
-      timestamp,
       isEdited: true,
-      edits: [...prevNote.edits, {note: prevNote.note, date: prevNote.date, timestamp: prevNote.timestamp}]
+      edits: [...prevNote.edits, {note: prevNote.note, date: prevNote.date}]
     };
     await Note.findByIdAndUpdate(id, updatedNote);
 
