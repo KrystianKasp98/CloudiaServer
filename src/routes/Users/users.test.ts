@@ -2,7 +2,7 @@ import app from '../../app';
 import * as request from 'supertest';
 import {expect, describe, it} from '@jest/globals';
 import {ExpressResult} from '../../types';
-import {responseText, statusCode} from '../../utils/consts';
+import {responseText, statusCode, forbiddenPasswords} from '../../utils/consts';
 import {validateBody, compareResultAndExpect} from '../../utils/helpers';
 
 const correctUserCredentials = {
@@ -38,6 +38,46 @@ const tooShortNameUser = {
 const tooLongNameUser = {
   ...correctUserToAdd, name: '1234567891011121314151617'
 };
+
+const tooShortLastnameUser = {
+  ...correctUserToAdd, lastname: 'sl'
+};
+
+const tooLongLastnameUser = {
+  ...correctUserToAdd, lastname: '123456789101112131516171819'
+};
+
+const wrongEmailUser = {
+  ...correctUserToAdd, email: 'bademail-without-monkey.com'
+};
+
+const tooShortEmailUser = {
+  ...correctUserToAdd, email: 'a@w.c'
+}
+
+const tooLongEmailUser = {
+  ...correctUserToAdd, email: 'blahblah-blah890-b-ttv-la-blah-hhhh@tolong.com'
+}
+
+const tooShortLoginUser = {
+  ...correctUserToAdd, login: 'login'
+}
+
+const tooLongLoginUser = {
+  ...correctUserToAdd, login: 'verylongloginforrealitslongerthan25'
+}
+
+const tooShortPasswordUser = {
+  ...correctUserToAdd, password: 'spassss'
+}
+
+const tooLongPasswordUser = {
+  ...correctUserToAdd, password: 'itisreallylongpasswordforreallongerthan25'
+}
+
+const forbiddenPasswordUser = {
+    ...correctUserToAdd, password: forbiddenPasswords[0]
+}
 
 const expectedUserType = {
 	_id: 'string',
@@ -107,5 +147,71 @@ describe('/users route [FAIL]', () => {
     const res: ExpressResult = await request(app).post('/users/new').send(tooLongNameUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s lastname is too short', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooShortLastnameUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s lastname is too long', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooLongLastnameUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s email is wrong', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(wrongEmailUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s email is too short', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooShortEmailUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s email is too long', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooLongEmailUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s login is too short', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooShortLoginUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s login is too long', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooLongLoginUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s password is too short', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooShortPasswordUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s password is too long', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(tooLongPasswordUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[POST] /new, user`s password is forbidden passwords', async () => {
+    const res: ExpressResult = await request(app).post('/users/new').send(forbiddenPasswordUser);
+
+    expect(res.statusCode).toEqual(statusCode.badRequest);
+  });
+
+  it('[DELETE] /:id, wrongid', async () => {
+    const res: ExpressResult = await request(app).post('/users/wrongid').send(forbiddenPasswordUser);
+
+    expect(res.statusCode).toEqual(statusCode.notFound);
   });
 });
