@@ -15,6 +15,7 @@ export const statusCode = {
 
 export const responseText = {
   badRequest: 'Bad request',
+  authFailed: 'auth failed, please log in',
   users: {
     usedLogin: 'passed login is used',
     usedEmail: 'passed email is used',
