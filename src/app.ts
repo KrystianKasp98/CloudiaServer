@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors = require('cors');
 import { responseText, statusCode } from './utils/consts';
-const Session = require('express-session');
+import { Session, sessionObject } from './utils/sessionStore';
 
 import NotesApi from './db/Notes/notes';
 import UsersApi from './db/Users/users';
@@ -26,20 +26,14 @@ const dbInit = async () => {
 dbInit().catch((err) => console.log(err));
 
 // Session init
-app.use(Session({
-  secret: process.env.SESSION_SECRET,
-  cookie: {maxAge: 30000},
-  saveUninitialized: false,
-  resave: true,
-  store
-}));
+app.use(Session(sessionObject));
 
 // middlewares
 if (process.env.NODE_ENV === 'development') {
   app.use(cors<Request>());
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   app.use((req, res, next) => {
     if (req.url.includes(notesPath)) {
       // @ts-ignore
