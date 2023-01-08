@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(cors<Request>());
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
   app.use(ErrorHandler.sessionValidation);
 }
 
