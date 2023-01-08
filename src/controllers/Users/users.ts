@@ -37,6 +37,20 @@ export default class ControllerUsers extends ErrorHandler {
         const user = await UsersApi.loginUser({login, password});
         const status = user === null ? statusCode.forbidden : statusCode.ok;
         const result = user === null ? false : true;
+
+        // handling session
+        // @ts-ignore
+        if (req.session.authenticated) {
+          res.status(statusCode.ok).json(true);
+        } else if (result) {
+          // @ts-ignore
+          req.session.authenticated = true;
+          // @ts-ignore
+          req.session.user = {
+            login, password
+          }
+        }
+
         res.status(status).json(result);
       } catch (err: unknown) {
         res.status(statusCode.notFound).json(err);
