@@ -5,7 +5,7 @@ dotenv.config();
 const store = new Session.MemoryStore();
 export const sessionObject = {
   secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 30000 },
+  cookie: {maxAge: 30000},
   saveUninitialized: false,
   resave: true,
   store

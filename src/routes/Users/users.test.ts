@@ -2,7 +2,7 @@ import app from '../../app';
 import * as request from 'supertest';
 import {expect, describe, it} from '@jest/globals';
 import {ExpressResult} from '../../types';
-import {responseText, statusCode, forbiddenPasswords, PATHS} from '../../utils/consts';
+import {RESPONSE_TEXT, statusCode, FORBIDDEN_PASSWORDS, PATHS} from '../../utils/consts';
 import {validateBody, compareResultAndExpect} from '../../utils/helpers';
 
 const correctUserCredentials = {
@@ -76,7 +76,7 @@ const tooLongPasswordUser = {
 };
 
 const forbiddenPasswordUser = {
-  ...correctUserToAdd, password: forbiddenPasswords[0]
+  ...correctUserToAdd, password: FORBIDDEN_PASSWORDS[0]
 };
 
 const expectedUserType = {
@@ -94,14 +94,14 @@ describe('/users route [SUCCESS]', () => {
   it('[POST] /login', async () => {
     const res: ExpressResult = await request(app).post('/users/login').send(correctUserCredentials);
 
-    expect(res.statusCode).toEqual(statusCode.ok);
+    expect(res.statusCode).toEqual(statusCode.OK);
     expect(res.body).toEqual(true);
   });
 
   it('[POST], [DELETE] /new, /:id', async () => {
     const resPost: ExpressResult = await request(app).post('/users/new').send(correctUserToAdd);
 
-    expect(resPost.statusCode).toEqual(statusCode.created);
+    expect(resPost.statusCode).toEqual(statusCode.CREATED);
     validateBody(expectedUserType, resPost.body);
     compareResultAndExpect(resPost.body, correctUserToAdd);
 
@@ -110,7 +110,7 @@ describe('/users route [SUCCESS]', () => {
     const expectedDeleteBody = {acknowledged: true, deletedCount: 1};
     const resDelete: ExpressResult = await request(app).delete(`/users/${userId}`);
 
-    expect(resDelete.statusCode).toEqual(statusCode.ok);
+    expect(resDelete.statusCode).toEqual(statusCode.OK);
     compareResultAndExpect(resDelete.body, expectedDeleteBody);
   });
 });
@@ -119,99 +119,99 @@ describe('/users route [FAIL]', () => {
   it('[POST] /login, wrong credentials', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/login`).send(wrongUserCredentials);
 
-    expect(res.statusCode).toEqual(statusCode.forbidden);
+    expect(res.statusCode).toEqual(statusCode.FORBIDDEN);
     expect(res.body).toEqual(false);
   });
 
   it('[POST] /new, user`s login is exist', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(existLoginUser);
 
-    expect(res.statusCode).toEqual(statusCode.conflict);
-    expect(res.body).toEqual(responseText.users.usedLogin);
+    expect(res.statusCode).toEqual(statusCode.CONFLICT);
+    expect(res.body).toEqual(RESPONSE_TEXT.USERS.USED_LOGIN);
   });
 
   it('[POST] /new, user`s email is exist', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(existEmailUser);
 
-    expect(res.statusCode).toEqual(statusCode.conflict);
-    expect(res.body).toEqual(responseText.users.usedEmail);
+    expect(res.statusCode).toEqual(statusCode.CONFLICT);
+    expect(res.body).toEqual(RESPONSE_TEXT.USERS.USED_EMAIL);
   });
 
   it('[POST] /new, user`s name is too short', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortNameUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s name is too long', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongNameUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s lastname is too short', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortLastnameUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s lastname is too long', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongLastnameUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s email is wrong', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(wrongEmailUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s email is too short', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortEmailUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s email is too long', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongEmailUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s login is too short', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortLoginUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s login is too long', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongLoginUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s password is too short', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortPasswordUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s password is too long', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongPasswordUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[POST] /new, user`s password is forbidden passwords', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(forbiddenPasswordUser);
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[DELETE] /:id, wrongid', async () => {
     const res: ExpressResult = await request(app).post(`${PATHS.USERS}/wrongid`).send(forbiddenPasswordUser);
 
-    expect(res.statusCode).toEqual(statusCode.notFound);
+    expect(res.statusCode).toEqual(statusCode.NOT_FOUND);
   });
 });

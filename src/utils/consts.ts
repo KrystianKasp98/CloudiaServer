@@ -1,27 +1,27 @@
-export const forbiddenPasswords = [
+export const FORBIDDEN_PASSWORDS = [
   '12345678',
   '1234567890',
   'password'
 ];
 
 export const statusCode = {
-  ok: 200,
-  created: 201,
-  badRequest: 400,
-  forbidden: 403,
-  notFound: 404,
-  conflict: 409,
-  internalServerError: 500,
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
 };
 
-export const responseText = {
-  badRequest: 'Bad request',
-  authFailed: 'auth failed, please log in',
-  users: {
-    usedLogin: 'passed login is used',
-    usedEmail: 'passed email is used',
+export const RESPONSE_TEXT = {
+  BAD_REQUEST: 'Bad request',
+  AUTH_FAILED: 'auth failed, please log in',
+  USERS: {
+    USED_LOGIN: 'passed login is used',
+    USED_EMAIL: 'passed email is used',
   },
-  notes: {
+  NOTES: {
     noteUpdateNotFound: (id: string): string => `there isn't exist note with passed id: ${id}`
   }
 };
@@ -32,4 +32,3 @@ export const PATHS = {
 };
 
 export const FORBIDDEN_PATHS = ['/notes', '/empty-test'];
-

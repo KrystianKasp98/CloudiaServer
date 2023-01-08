@@ -1,33 +1,33 @@
 import {NextFunction, Request, Response} from 'express';
 import {validationResult} from 'express-validator';
-import {responseText, statusCode, FORBIDDEN_PATHS} from '../utils/consts';
+import {RESPONSE_TEXT, statusCode, FORBIDDEN_PATHS} from '../utils/consts';
 
 export default class ErrorHandler {
   static async provider(req: Request, res: Response, callback) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(statusCode.badRequest).json({errors: errors.array()});
+        return res.status(statusCode.BAD_REQUEST).json({errors: errors.array()});
       }
       await callback(req, res);
     } catch (err) {
-      res.status(statusCode.internalServerError).send(err);
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(err);
     }
   }
 
   static badRequest(req: Request, res: Response) {
-    res.status(statusCode.notFound).send(responseText.badRequest);
+    res.status(statusCode.NOT_FOUND).send(RESPONSE_TEXT.BAD_REQUEST);
   }
 
   static sessionValidation(req: Request, res: Response, next: NextFunction) {
     const isPathForbidden = FORBIDDEN_PATHS.some(path => req.url.includes(path));
     if (isPathForbidden) {
-        // @ts-ignore
-        if (req.session.authenticated) {
-          next();
-        } else {
-          res.status(statusCode.forbidden).send(responseText.authFailed);
-        }
+      // @ts-ignore
+      if (req.session.authenticated) {
+        next();
+      } else {
+        res.status(statusCode.FORBIDDEN).send(RESPONSE_TEXT.AUTH_FAILED);
+      }
     } else {
       next();
     }

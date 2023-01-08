@@ -2,7 +2,7 @@ import {connect} from 'mongoose';
 import User from '../../models/Users/users';
 import * as dotenv from 'dotenv';
 import {Options, UserAddInterface, UserLoginInterface} from '../types';
-import {responseText} from '../../utils/consts';
+import {RESPONSE_TEXT} from '../../utils/consts';
 
 dotenv.config();
 
@@ -18,12 +18,12 @@ export default class UsersApi {
   static async addUser({name, lastname, email, login, password}: UserAddInterface) {
     const existingUserLogin = await User.find({login});
     if (existingUserLogin.length) {
-      return responseText.users.usedLogin;
+      return RESPONSE_TEXT.USERS.USED_LOGIN;
     }
 
     const existingUserEmail = await User.find({email});
     if (existingUserEmail.length) {
-      return responseText.users.usedEmail;
+      return RESPONSE_TEXT.USERS.USED_EMAIL;
     }
 
     const userDocument = new User({name, lastname, email, login, password});

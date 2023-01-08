@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {body} from 'express-validator';
 import ControllerUsers from '../../controllers/Users/users';
-import {forbiddenPasswords} from '../../utils/consts';
+import {FORBIDDEN_PASSWORDS} from '../../utils/consts';
 
 const router = Router();
 
@@ -41,7 +41,7 @@ router.post(
     isLength({min: limits.login.min, max: limits.login.max}),
   body('password').
     not().
-    isIn(forbiddenPasswords).
+    isIn(FORBIDDEN_PASSWORDS).
     withMessage('Do not use a common word as the password').
     isLength({min: limits.password.min, max: limits.password.max}),
   ControllerUsers.add

@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 import NotesApi from '../../db/Notes/notes';
 import ErrorHandler from '../../error';
 import {NoteAddInterface} from '../../db/types';
-import {responseText, statusCode} from '../../utils/consts';
+import {RESPONSE_TEXT, statusCode} from '../../utils/consts';
 
 export default class ControllerNotes extends ErrorHandler {
   constructor() {
@@ -15,7 +15,7 @@ export default class ControllerNotes extends ErrorHandler {
   ): Promise<void> {
     const callback = async () => {
       const result = await NotesApi.getNotes();
-      res.status(statusCode.ok).json(result);
+      res.status(statusCode.OK).json(result);
     };
 
     await super.provider(req, res, callback);
@@ -29,9 +29,9 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await NotesApi.getNote(id);
-        res.status(statusCode.ok).json(result);
+        res.status(statusCode.OK).json(result);
       } catch (err: unknown) {
-        res.status(statusCode.notFound).json(err);
+        res.status(statusCode.NOT_FOUND).json(err);
       }
     };
 
@@ -46,9 +46,9 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await NotesApi.deleteNote(id);
-        res.status(statusCode.ok).json(result);
+        res.status(statusCode.OK).json(result);
       } catch (err) {
-        res.status(statusCode.notFound).json(err);
+        res.status(statusCode.NOT_FOUND).json(err);
       }
     };
 
@@ -63,10 +63,10 @@ export default class ControllerNotes extends ErrorHandler {
       try {
         const {note, date}: NoteAddInterface = req.body;
         const result = await NotesApi.addNote({note, date});
-        const status = typeof result === 'string' ? statusCode.conflict : statusCode.created;
+        const status = typeof result === 'string' ? statusCode.CONFLICT : statusCode.CREATED;
         res.status(status).json(result);
       } catch (err: unknown) {
-        res.status(statusCode.notFound).json(err);
+        res.status(statusCode.NOT_FOUND).json(err);
       }
     };
 
@@ -83,12 +83,12 @@ export default class ControllerNotes extends ErrorHandler {
         const {note, date}: NoteAddInterface = req.body;
         const result = await NotesApi.editNote({note, date, id});
         if (result === null) {
-          res.status(statusCode.notFound).send(responseText.notes.noteUpdateNotFound(id));
+          res.status(statusCode.NOT_FOUND).send(RESPONSE_TEXT.NOTES.noteUpdateNotFound(id));
         } else {
-          res.status(statusCode.ok).json(result);
+          res.status(statusCode.OK).json(result);
         }
       } catch (err: unknown) {
-        res.status(statusCode.notFound).json(err);
+        res.status(statusCode.NOT_FOUND).json(err);
       }
     };
 

@@ -18,14 +18,14 @@ describe('/notes route [SUCCESS]', () => {
   it('[GET] /', async () => {
     const res: ExpressResult = await request(app).get(PATHS.NOTES);
 
-    expect(res.statusCode).toEqual(statusCode.ok);
+    expect(res.statusCode).toEqual(statusCode.OK);
     expect(Array.isArray(res.body)).toEqual(true);
   });
 
   it('[GET] /:id', async () => {
     const res: ExpressResult = await request(app).get(`${PATHS.NOTES}/63b2113f34a43c394fe21f5e`);
 
-    expect(res.statusCode).toEqual(statusCode.ok);
+    expect(res.statusCode).toEqual(statusCode.OK);
     validateBody(expectedNoteType, res.body);
   });
 
@@ -33,7 +33,7 @@ describe('/notes route [SUCCESS]', () => {
     const inputPostBody = {note: 'I <3 CloudiaServer', date: '2022-12-26T22:19:56.945Z'};
     const resPost: ExpressResult = await request(app).post(PATHS.NOTES).send(inputPostBody);
 
-    expect(resPost.statusCode).toEqual(statusCode.created);
+    expect(resPost.statusCode).toEqual(statusCode.CREATED);
     validateBody(expectedNoteType, resPost.body);
     compareResultAndExpect(resPost.body, inputPostBody);
 
@@ -41,14 +41,14 @@ describe('/notes route [SUCCESS]', () => {
     const inputPutBody = {note: 'I <3 CloudiaServer much more as before'};
     const resPut: ExpressResult = await request(app).put(`${PATHS.NOTES}/${noteId}`).send(inputPutBody);
 
-    expect(resPut.statusCode).toEqual(statusCode.ok);
+    expect(resPut.statusCode).toEqual(statusCode.OK);
     validateBody(expectedNoteType, resPut.body);
     compareResultAndExpect(resPut.body, inputPutBody);
 
     const expectedDeleteBody = {acknowledged: true, deletedCount: 1};
     const resDelete: ExpressResult = await request(app).delete(`${PATHS.NOTES}/${noteId}`);
 
-    expect(resDelete.statusCode).toEqual(statusCode.ok);
+    expect(resDelete.statusCode).toEqual(statusCode.OK);
     compareResultAndExpect(resDelete.body, expectedDeleteBody);
   });
 });
@@ -57,30 +57,30 @@ describe('/notes route [FAIL]', () => {
   it('[GET] /:id, bad id', async () => {
     const res: ExpressResult = await request(app).get(`${PATHS.NOTES}/wrongid`);
 
-    expect(res.statusCode).toEqual(statusCode.notFound);
+    expect(res.statusCode).toEqual(statusCode.NOT_FOUND);
   });
 
   it('[POST] /, empty note', async () => {
     const res: ExpressResult = await request(app).post(PATHS.NOTES).send({note: ''});
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[PUT] /:id, empty note', async () => {
     const res: ExpressResult = await request(app).put(`${PATHS.NOTES}/63a24fa71e33c4ef5943a37b`).send({note: ''});
 
-    expect(res.statusCode).toEqual(statusCode.badRequest);
+    expect(res.statusCode).toEqual(statusCode.BAD_REQUEST);
   });
 
   it('[PUT] /:id, bad id', async () => {
     const res: ExpressResult = await request(app).put(`${PATHS.NOTES}/wrongid`).send({note: 'wrong id'});
 
-    expect(res.statusCode).toEqual(statusCode.notFound);
+    expect(res.statusCode).toEqual(statusCode.NOT_FOUND);
   });
 
   it('[DELETE] /:id, bad id', async () => {
     const res: ExpressResult = await request(app).delete(`${PATHS.NOTES}/wrongid`);
 
-    expect(res.statusCode).toEqual(statusCode.notFound);
+    expect(res.statusCode).toEqual(statusCode.NOT_FOUND);
   });
 });

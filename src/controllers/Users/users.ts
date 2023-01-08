@@ -17,10 +17,10 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {name, lastname, email, login, password}: UserAddInterface = req.body;
         const result = await UsersApi.addUser({name, lastname, email, login, password});
-        const status = typeof result === 'string' ? statusCode.conflict : statusCode.created;
+        const status = typeof result === 'string' ? statusCode.CONFLICT : statusCode.CREATED;
         res.status(status).json(result);
       } catch (err) {
-        res.status(statusCode.notFound).json(err);
+        res.status(statusCode.NOT_FOUND).json(err);
       }
     };
 
@@ -35,25 +35,25 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {login, password}: UserLoginInterface = req.body;
         const user = await UsersApi.loginUser({login, password});
-        const status = user === null ? statusCode.forbidden : statusCode.ok;
+        const status = user === null ? statusCode.FORBIDDEN : statusCode.OK;
         const result = user === null ? false : true;
 
         // handling session
         // @ts-ignore
         if (req.session.authenticated) {
-          res.status(statusCode.ok).json(true);
+          res.status(statusCode.OK).json(true);
         } else if (result) {
           // @ts-ignore
           req.session.authenticated = true;
           // @ts-ignore
           req.session.user = {
             login, password
-          }
+          };
         }
 
         res.status(status).json(result);
       } catch (err: unknown) {
-        res.status(statusCode.notFound).json(err);
+        res.status(statusCode.NOT_FOUND).json(err);
       }
     };
 
@@ -68,9 +68,9 @@ export default class ControllerUsers extends ErrorHandler {
       try {
         const {id} = req.params;
         const result = await UsersApi.deleteUser(id);
-        res.status(statusCode.ok).json(result);
+        res.status(statusCode.OK).json(result);
       } catch (err: unknown) {
-        res.status(statusCode.conflict).json(err);
+        res.status(statusCode.CONFLICT).json(err);
       }
     };
 
