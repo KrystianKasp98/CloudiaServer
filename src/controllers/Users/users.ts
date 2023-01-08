@@ -3,6 +3,7 @@ import UsersApi from '../../db/Users/users';
 import ErrorHandler from '../../error';
 import {UserAddInterface, UserLoginInterface} from '../../db/types';
 import {statusCode} from '../../utils/consts';
+import CryptoHandler from '../../utils/cryptoHandler';
 
 export default class ControllerUsers extends ErrorHandler {
   constructor() {
@@ -16,7 +17,7 @@ export default class ControllerUsers extends ErrorHandler {
     const callback = async () => {
       try {
         const {name, lastname, email, login, password}: UserAddInterface = req.body;
-        const result = await UsersApi.addUser({name, lastname, email, login, password});
+        const result = await UsersApi.addUser({name, lastname, email, login, password: CryptoHandler.encryptPassword(password)});
         const status = typeof result === 'string' ? statusCode.CONFLICT : statusCode.CREATED;
         res.status(status).json(result);
       } catch (err) {

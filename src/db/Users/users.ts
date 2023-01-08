@@ -3,6 +3,7 @@ import User from '../../models/Users/users';
 import * as dotenv from 'dotenv';
 import {Options, UserAddInterface, UserLoginInterface} from '../types';
 import {RESPONSE_TEXT} from '../../utils/consts';
+import CryptoHandler from '../../utils/cryptoHandler';
 
 dotenv.config();
 
@@ -31,7 +32,10 @@ export default class UsersApi {
   }
 
   static async loginUser({login, password}: UserLoginInterface) {
-    return await User.findOne({login, password});
+    const user = await User.findOne({login});
+    const decryptedPassword = CryptoHandler.decryptPassword(user.password);
+    return decryptedPassword === password ? user : null;
+
   }
 
   static async deleteUser(id: string) {
