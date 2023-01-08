@@ -11,6 +11,7 @@ export const statusCode = {
   forbidden: 403,
   notFound: 404,
   conflict: 409,
+  internalServerError: 500,
 };
 
 export const responseText = {
