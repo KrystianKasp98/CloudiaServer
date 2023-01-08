@@ -24,3 +24,6 @@ export const responseText = {
     noteUpdateNotFound: (id: string): string => `there isn't exist note with passed id: ${id}`
   }
 };
+
+export const FORBIDDEN_PATHS = ['/notes', '/empty-test'];
+

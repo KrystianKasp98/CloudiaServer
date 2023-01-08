@@ -12,7 +12,6 @@ import routerNotes from './routes/Notes/notes';
 import routerUsers from './routes/Users/users';
 import ErrorHandler from './error';
 
-const store = new Session.MemoryStore();
 const app: Application = express();
 const notesPath = '/notes';
 const usersPath = '/users';
@@ -34,18 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  app.use((req, res, next) => {
-    if (req.url.includes(notesPath)) {
-      // @ts-ignore
-      if (req.session.authenticated) {
-        next();
-      } else {
-        res.status(statusCode.forbidden).send(responseText.authFailed);
-      }
-    } else {
-      next();
-    }
-  });
+  app.use(ErrorHandler.sessionValidation);
 }
 
 app.use(helmet());
