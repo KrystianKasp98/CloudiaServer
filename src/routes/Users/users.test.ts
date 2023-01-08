@@ -2,7 +2,7 @@ import app from '../../app';
 import * as request from 'supertest';
 import {expect, describe, it} from '@jest/globals';
 import {ExpressResult} from '../../types';
-import {responseText, statusCode, forbiddenPasswords} from '../../utils/consts';
+import {responseText, statusCode, forbiddenPasswords, PATHS} from '../../utils/consts';
 import {validateBody, compareResultAndExpect} from '../../utils/helpers';
 
 const correctUserCredentials = {
@@ -117,100 +117,100 @@ describe('/users route [SUCCESS]', () => {
 
 describe('/users route [FAIL]', () => {
   it('[POST] /login, wrong credentials', async () => {
-    const res: ExpressResult = await request(app).post('/users/login').send(wrongUserCredentials);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/login`).send(wrongUserCredentials);
 
     expect(res.statusCode).toEqual(statusCode.forbidden);
     expect(res.body).toEqual(false);
   });
 
   it('[POST] /new, user`s login is exist', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(existLoginUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(existLoginUser);
 
     expect(res.statusCode).toEqual(statusCode.conflict);
     expect(res.body).toEqual(responseText.users.usedLogin);
   });
 
   it('[POST] /new, user`s email is exist', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(existEmailUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(existEmailUser);
 
     expect(res.statusCode).toEqual(statusCode.conflict);
     expect(res.body).toEqual(responseText.users.usedEmail);
   });
 
   it('[POST] /new, user`s name is too short', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooShortNameUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortNameUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s name is too long', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooLongNameUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongNameUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s lastname is too short', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooShortLastnameUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortLastnameUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s lastname is too long', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooLongLastnameUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongLastnameUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s email is wrong', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(wrongEmailUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(wrongEmailUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s email is too short', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooShortEmailUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortEmailUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s email is too long', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooLongEmailUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongEmailUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s login is too short', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooShortLoginUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortLoginUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s login is too long', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooLongLoginUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongLoginUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s password is too short', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooShortPasswordUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooShortPasswordUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s password is too long', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(tooLongPasswordUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(tooLongPasswordUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[POST] /new, user`s password is forbidden passwords', async () => {
-    const res: ExpressResult = await request(app).post('/users/new').send(forbiddenPasswordUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/new`).send(forbiddenPasswordUser);
 
     expect(res.statusCode).toEqual(statusCode.badRequest);
   });
 
   it('[DELETE] /:id, wrongid', async () => {
-    const res: ExpressResult = await request(app).post('/users/wrongid').send(forbiddenPasswordUser);
+    const res: ExpressResult = await request(app).post(`${PATHS.USERS}/wrongid`).send(forbiddenPasswordUser);
 
     expect(res.statusCode).toEqual(statusCode.notFound);
   });

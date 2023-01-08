@@ -26,5 +26,10 @@ export const responseText = {
   }
 };
 
+export const PATHS = {
+  NOTES: '/notes',
+  USERS: '/users'
+};
+
 export const FORBIDDEN_PATHS = ['/notes', '/empty-test'];
 

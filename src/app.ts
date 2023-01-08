@@ -3,8 +3,8 @@ import {Request, Response, Application} from 'express';
 import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors = require('cors');
-import { responseText, statusCode } from './utils/consts';
-import { Session, sessionObject } from './utils/sessionStore';
+import {Session, sessionObject} from './utils/sessionStore';
+import {PATHS} from './utils/consts';
 
 import NotesApi from './db/Notes/notes';
 import UsersApi from './db/Users/users';
@@ -13,8 +13,6 @@ import routerUsers from './routes/Users/users';
 import ErrorHandler from './error';
 
 const app: Application = express();
-const notesPath = '/notes';
-const usersPath = '/users';
 dotenv.config();
 
 const dbInit = async () => {
@@ -44,8 +42,8 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Hi from CloudiaServer'
   });
 });
-app.use(notesPath, routerNotes);
-app.use(usersPath, routerUsers);
+app.use(PATHS.NOTES, routerNotes);
+app.use(PATHS.USERS, routerUsers);
 app.all('*', ErrorHandler.badRequest);
 
 export default app;
