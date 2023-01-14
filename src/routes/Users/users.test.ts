@@ -6,8 +6,8 @@ import {RESPONSE_TEXT, statusCode, FORBIDDEN_PASSWORDS, PATHS} from '../../utils
 import {validateBody, compareResultAndExpect} from '../../utils/helpers';
 
 const correctUserCredentials = {
-  login: 'CloudIa202',
-  password: 'fiufiu202',
+  login: 'Kasprzak',
+  password: 'Krystian',
 };
 
 const wrongUserCredentials = {

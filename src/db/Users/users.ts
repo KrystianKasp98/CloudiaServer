@@ -33,6 +33,7 @@ export default class UsersApi {
 
   static async loginUser({login, password}: UserLoginInterface) {
     const user = await User.findOne({login});
+    if (!user) return null;
     const decryptedPassword = CryptoHandler.decryptPassword(user.password);
     return decryptedPassword === password ? user : null;
 
