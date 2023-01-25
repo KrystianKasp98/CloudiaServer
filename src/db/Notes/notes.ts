@@ -45,7 +45,7 @@ export default class NotesApi {
   }
 
   static async getNotes() {
-    return await Note.find({});
+    return await Note.find({}).sort({date: -1});
   }
 
   static async deleteNote(id: string) {
