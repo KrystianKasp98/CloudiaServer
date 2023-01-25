@@ -1,6 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
 import {validationResult} from 'express-validator';
 import {RESPONSE_TEXT, statusCode, FORBIDDEN_PATHS} from '../utils/consts';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export default class ErrorHandler {
   static async provider(req: Request, res: Response, callback) {
@@ -19,11 +22,10 @@ export default class ErrorHandler {
     res.status(statusCode.NOT_FOUND).send(RESPONSE_TEXT.BAD_REQUEST);
   }
 
-  static sessionValidation(req: Request, res: Response, next: NextFunction) {
+  static sessionValidation(req: any, res: Response, next: NextFunction) {
     const isPathForbidden = FORBIDDEN_PATHS.some(path => req.url.includes(path));
     if (isPathForbidden) {
-      // @ts-ignore
-      if (req.session.authenticated) {
+      if (req.session.authenticated || req.headers?.apikey === process.env.API_KEY) {
         next();
       } else {
         res.status(statusCode.FORBIDDEN).send(RESPONSE_TEXT.AUTH_FAILED);

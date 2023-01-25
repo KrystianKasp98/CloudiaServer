@@ -29,7 +29,7 @@ export default class ControllerUsers extends ErrorHandler {
   }
 
   static async login(
-    req: Request,
+    req: any,
     res: Response
   ): Promise<void> {
     const callback = async () => {
@@ -38,20 +38,15 @@ export default class ControllerUsers extends ErrorHandler {
         const user = await UsersApi.loginUser({login, password});
         const status = user === null ? statusCode.FORBIDDEN : statusCode.OK;
         const result = user === null ? false : true;
-
         // handling session
-        // @ts-ignore
         if (req.session.authenticated) {
           res.status(statusCode.OK).json(true);
         } else if (result) {
-          // @ts-ignore
           req.session.authenticated = true;
-          // @ts-ignore
           req.session.user = {
             login, password
           };
         }
-
         res.status(status).json(result);
       } catch (err: unknown) {
         res.status(statusCode.NOT_FOUND).json(err);
