@@ -23,7 +23,7 @@ describe('/notes route [SUCCESS]', () => {
   });
 
   it('[GET] /:id', async () => {
-    const res: ExpressResult = await request(app).get(`${PATHS.NOTES}/63b2113f34a43c394fe21f5e`);
+    const res: ExpressResult = await request(app).get(`${PATHS.NOTES}/63b4b2da1d7d5633f541f28c`);
 
     expect(res.statusCode).toEqual(statusCode.OK);
     validateBody(expectedNoteType, res.body);
