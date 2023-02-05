@@ -15,9 +15,9 @@ import ErrorHandler from './error';
 const app: Application = express();
 dotenv.config();
 
-const dbInit = async () => {
-  await NotesApi.init();
-  await UsersApi.init();
+const dbInit = () => {
+  NotesApi.init();
+  UsersApi.init();
 };
 
 const dbDisconect = () => {
@@ -25,10 +25,12 @@ const dbDisconect = () => {
   UsersApi.disconect();
 };
 
-dbInit().catch(err => {
-  console.log({ err });
+try {
+  dbInit();
+} catch (err) {
   dbDisconect();
-});
+  console.log({ err });
+}
 
 // Session init
 app.use(Session(sessionObject));

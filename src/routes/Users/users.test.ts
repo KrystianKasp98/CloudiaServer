@@ -2,6 +2,7 @@ import * as request from 'supertest';
 import { expect, describe, it } from '@jest/globals';
 
 import app from '../../app';
+import UsersApi from '../../db/Users/users';
 import { ExpressResult } from '../../types';
 import {
   RESPONSE_TEXT,
@@ -109,6 +110,14 @@ const expectedUserType = {
   createdAt: 'string',
   updatedAt: 'string'
 };
+
+beforeAll(() => {
+  UsersApi.init();
+});
+
+afterAll(() => {
+  UsersApi.disconect();
+});
 
 describe('/users route [SUCCESS]', () => {
   it('[POST] /login', async () => {

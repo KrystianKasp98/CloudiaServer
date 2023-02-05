@@ -2,6 +2,7 @@ import * as request from 'supertest';
 import { expect, describe, it } from '@jest/globals';
 
 import app from '../../app';
+import NotesApi from '../../db/Notes/notes';
 import { ExpressResult } from '../../types';
 import { statusCode, PATHS } from '../../utils/consts';
 import { validateBody, compareResultAndExpect } from '../../utils/helpers';
@@ -13,6 +14,14 @@ const expectedNoteType = {
   edits: 'object',
   isEdited: 'boolean'
 };
+
+beforeAll(async () => {
+  await NotesApi.init();
+});
+
+afterAll(() => {
+  NotesApi.disconect();
+});
 
 describe('/notes route [SUCCESS]', () => {
   it('[GET] /', async () => {

@@ -9,11 +9,8 @@ const defaultOptions: Options = {
 };
 
 export default class ApiBase {
-  static async init(
-    url = process.env.MONGOCLOUD_URL,
-    options = defaultOptions
-  ) {
-    await connect(url, options);
+  static init(url = process.env.MONGOCLOUD_URL, options = defaultOptions) {
+    connect(url, options);
   }
 
   static disconect() {
