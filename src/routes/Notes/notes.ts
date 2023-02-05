@@ -2,8 +2,13 @@ import { Router } from 'express';
 import { body } from 'express-validator';
 
 import ControllerNotes from '../../controllers/Notes/notes';
+import ErrorHandler from '../../error';
 
 const router = Router();
+
+if (process.env.NODE_ENV === 'production') {
+  router.use(ErrorHandler.sessionValidation);
+}
 
 router.get('/', ControllerNotes.getAll);
 router.get('/:id', ControllerNotes.getById);

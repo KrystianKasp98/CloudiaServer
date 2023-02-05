@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import * as dotenv from 'dotenv';
 
-import { RESPONSE_TEXT, statusCode, FORBIDDEN_PATHS } from '../utils/consts';
+import { RESPONSE_TEXT, statusCode } from '../utils/consts';
 
 dotenv.config();
 
@@ -26,20 +26,13 @@ export default class ErrorHandler {
   }
 
   static sessionValidation(req: any, res: Response, next: NextFunction) {
-    const isPathForbidden = FORBIDDEN_PATHS.some(path =>
-      req.url.includes(path)
-    );
-    if (isPathForbidden) {
-      if (
-        req.session.authenticated ||
-        req.headers?.apikey === process.env.API_KEY
-      ) {
-        next();
-      } else {
-        res.status(statusCode.FORBIDDEN).send(RESPONSE_TEXT.AUTH_FAILED);
-      }
-    } else {
+    if (
+      req.session.authenticated ||
+      req.headers?.apikey === process.env.API_KEY
+    ) {
       next();
+    } else {
+      res.status(statusCode.FORBIDDEN).send(RESPONSE_TEXT.AUTH_FAILED);
     }
   }
 }
