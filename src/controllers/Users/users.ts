@@ -51,7 +51,14 @@ export default class ControllerUsers extends ErrorHandler {
             password
           };
         }
-        res.status(status).json(result);
+
+        delete req.session?.user?.password;
+
+        if (req.session) {
+          res.status(status).json({ ...req.session, sessionID: req.sessionID });
+        } else {
+          res.status(status).json(result);
+        }
       } catch (err: unknown) {
         res.status(statusCode.NOT_FOUND).json(err);
       }
