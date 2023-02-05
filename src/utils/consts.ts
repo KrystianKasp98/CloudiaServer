@@ -1,8 +1,4 @@
-export const FORBIDDEN_PASSWORDS = [
-  '12345678',
-  '1234567890',
-  'password'
-];
+export const FORBIDDEN_PASSWORDS = ['12345678', '1234567890', 'password'];
 
 export const statusCode = {
   OK: 200,
@@ -11,7 +7,7 @@ export const statusCode = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   CONFLICT: 409,
-  INTERNAL_SERVER_ERROR: 500,
+  INTERNAL_SERVER_ERROR: 500
 };
 
 export const RESPONSE_TEXT = {
@@ -19,10 +15,11 @@ export const RESPONSE_TEXT = {
   AUTH_FAILED: 'auth failed, please log in',
   USERS: {
     USED_LOGIN: 'passed login is used',
-    USED_EMAIL: 'passed email is used',
+    USED_EMAIL: 'passed email is used'
   },
   NOTES: {
-    noteUpdateNotFound: (id: string): string => `there isn't exist note with passed id: ${id}`
+    noteUpdateNotFound: (id: string): string =>
+      `there isn't exist note with passed id: ${id}`
   }
 };
 

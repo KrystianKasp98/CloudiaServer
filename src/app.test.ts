@@ -1,13 +1,14 @@
-import app from './app';
 import * as request from 'supertest';
-import {expect, describe, it} from '@jest/globals';
-import {ExpressResult} from './types';
-import {statusCode, RESPONSE_TEXT} from './utils/consts';
+import { expect, describe, it } from '@jest/globals';
+
+import app from './app';
+import { ExpressResult } from './types';
+import { statusCode, RESPONSE_TEXT } from './utils/consts';
 
 describe('/ route', () => {
   it('/ [SUCCESS]', async () => {
     const res: ExpressResult = await request(app).get('/');
-    const expectedBody = {message: 'Hi from CloudiaServer'};
+    const expectedBody = { message: 'Hi from CloudiaServer' };
 
     expect(res.statusCode).toEqual(statusCode.OK);
     expect(res.body).toEqual(expectedBody);

@@ -1,7 +1,8 @@
-import {NextFunction, Request, Response} from 'express';
-import {validationResult} from 'express-validator';
-import {RESPONSE_TEXT, statusCode, FORBIDDEN_PATHS} from '../utils/consts';
+import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import * as dotenv from 'dotenv';
+
+import { RESPONSE_TEXT, statusCode, FORBIDDEN_PATHS } from '../utils/consts';
 
 dotenv.config();
 
@@ -10,7 +11,9 @@ export default class ErrorHandler {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(statusCode.BAD_REQUEST).json({errors: errors.array()});
+        return res
+          .status(statusCode.BAD_REQUEST)
+          .json({ errors: errors.array() });
       }
       await callback(req, res);
     } catch (err) {
@@ -23,9 +26,14 @@ export default class ErrorHandler {
   }
 
   static sessionValidation(req: any, res: Response, next: NextFunction) {
-    const isPathForbidden = FORBIDDEN_PATHS.some(path => req.url.includes(path));
+    const isPathForbidden = FORBIDDEN_PATHS.some(path =>
+      req.url.includes(path)
+    );
     if (isPathForbidden) {
-      if (req.session.authenticated || req.headers?.apikey === process.env.API_KEY) {
+      if (
+        req.session.authenticated ||
+        req.headers?.apikey === process.env.API_KEY
+      ) {
         next();
       } else {
         res.status(statusCode.FORBIDDEN).send(RESPONSE_TEXT.AUTH_FAILED);

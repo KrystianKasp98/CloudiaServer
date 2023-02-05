@@ -1,11 +1,11 @@
 import * as express from 'express';
-import {Request, Response, Application} from 'express';
+import { Request, Response, Application } from 'express';
 import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors = require('cors');
-import {Session, sessionObject} from './utils/sessionStore';
-import {PATHS} from './utils/consts';
 
+import { Session, sessionObject } from './utils/sessionStore';
+import { PATHS } from './utils/consts';
 import NotesApi from './db/Notes/notes';
 import UsersApi from './db/Users/users';
 import routerNotes from './routes/Notes/notes';
@@ -20,7 +20,7 @@ const dbInit = async () => {
   await UsersApi.init();
 };
 
-dbInit().catch((err) => console.log(err));
+dbInit().catch(err => console.log(err));
 
 // Session init
 app.use(Session(sessionObject));

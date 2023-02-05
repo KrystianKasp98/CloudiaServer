@@ -4,7 +4,10 @@ export const validateBody = (expectedType: object, body: object) => {
   }
 };
 
-export const compareResultAndExpect = (body: object, expectedResult: object) => {
+export const compareResultAndExpect = (
+  body: object,
+  expectedResult: object
+) => {
   for (const [key, value] of Object.entries(expectedResult)) {
     if (key === 'password') {
       continue;

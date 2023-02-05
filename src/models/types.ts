@@ -3,12 +3,12 @@ interface SingleNote {
   date: Date;
 }
 
-export interface NoteInterface extends SingleNote{
+export interface NoteInterface extends SingleNote {
   isEdited: boolean;
 }
 
-export interface FullNoteInterFace extends NoteInterface{
-  edits: Array<SingleNote>
+export interface FullNoteInterFace extends NoteInterface {
+  edits: Array<SingleNote>;
 }
 
 export interface UserInterface {
