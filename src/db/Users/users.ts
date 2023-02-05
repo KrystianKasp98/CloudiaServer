@@ -1,27 +1,12 @@
-import { connect, connection } from 'mongoose';
-import * as dotenv from 'dotenv';
-
 import User from '../../models/Users/users';
-import { Options, UserAddInterface, UserLoginInterface } from '../types';
+import ApiBase from '../apiBase';
+import { UserAddInterface, UserLoginInterface } from '../types';
 import { RESPONSE_TEXT } from '../../utils/consts';
 import CryptoHandler from '../../utils/cryptoHandler';
 
-dotenv.config();
-
-const defaultOptions: Options = {
-  dbName: process.env.MONGO_DB_NAME || 'test'
-};
-
-export default class UsersApi {
-  static async init(
-    url = process.env.MONGOCLOUD_URL,
-    options = defaultOptions
-  ) {
-    await connect(url, options);
-  }
-
-  static disconect() {
-    connection.close();
+export default class UsersApi extends ApiBase {
+  constructor() {
+    super();
   }
 
   static async addUser({

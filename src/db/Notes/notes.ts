@@ -1,27 +1,8 @@
-import { connect, connection } from 'mongoose';
-import * as dotenv from 'dotenv';
-
+import ApiBase from '../apiBase';
 import Note from '../../models/Notes/notes';
-import { Options, NoteAddInterface, NoteEditInterface } from '../types';
+import { NoteAddInterface, NoteEditInterface } from '../types';
 
-dotenv.config();
-
-const defaultOptions: Options = {
-  dbName: process.env.MONGO_DB_NAME || 'test'
-};
-
-export default class NotesApi {
-  static async init(
-    url = process.env.MONGOCLOUD_URL,
-    options = defaultOptions
-  ) {
-    await connect(url, options);
-  }
-
-  static disconect() {
-    connection.close();
-  }
-
+export default class NotesApi extends ApiBase {
   static async addNote({ note, date }: NoteAddInterface) {
     const noteDocument = new Note({
       note,
