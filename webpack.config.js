@@ -6,18 +6,18 @@ module.exports = {
   target: 'node',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'index.js',
+    filename: 'index.js'
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js']
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: ['ts-loader'],
-      },
-    ],
+        use: ['ts-loader']
+      }
+    ]
   },
-  externals: [nodeExternals()],
+  externals: [nodeExternals()]
 };
