@@ -20,7 +20,15 @@ const dbInit = async () => {
   await UsersApi.init();
 };
 
-dbInit().catch(err => console.log(err));
+const dbDisconect = () => {
+  NotesApi.disconect();
+  UsersApi.disconect();
+};
+
+dbInit().catch(err => {
+  console.log({ err });
+  dbDisconect();
+});
 
 // Session init
 app.use(Session(sessionObject));

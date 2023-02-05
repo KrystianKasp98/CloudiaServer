@@ -1,4 +1,4 @@
-import { connect } from 'mongoose';
+import { connect, connection } from 'mongoose';
 import * as dotenv from 'dotenv';
 
 import Note from '../../models/Notes/notes';
@@ -16,6 +16,10 @@ export default class NotesApi {
     options = defaultOptions
   ) {
     await connect(url, options);
+  }
+
+  static disconect() {
+    connection.close();
   }
 
   static async addNote({ note, date }: NoteAddInterface) {

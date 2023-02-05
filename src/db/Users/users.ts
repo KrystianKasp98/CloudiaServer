@@ -1,4 +1,4 @@
-import { connect } from 'mongoose';
+import { connect, connection } from 'mongoose';
 import * as dotenv from 'dotenv';
 
 import User from '../../models/Users/users';
@@ -18,6 +18,10 @@ export default class UsersApi {
     options = defaultOptions
   ) {
     await connect(url, options);
+  }
+
+  static disconect() {
+    connection.close();
   }
 
   static async addUser({
