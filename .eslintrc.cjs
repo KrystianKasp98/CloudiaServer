@@ -10,8 +10,6 @@ module.exports = {
   extends: [
     'airbnb',
     'airbnb-typescript',
-    'plugin:react/jsx-runtime',
-    "plugin:react-hooks/recommended",
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:prettier/recommended',
@@ -38,14 +36,6 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/no-explicit-any": "warn",
-    'react/function-component-definition': [
-      2,
-      {
-        namedComponents: 'arrow-function',
-      },
-    ],
-    'react/destructuring-assignment': 'off',
-    'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 'off',
     'arrow-body-style': 'off',
     'prettier/prettier': 'error',
@@ -75,7 +65,7 @@ module.exports = {
         jest: true,
       },
       files: ['**/?(*.)+(test).ts?(x)'],
-      extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
+      extends: ['plugin:jest/recommended'],
     },
   ],
 };
